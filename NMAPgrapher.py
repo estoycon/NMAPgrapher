@@ -36,8 +36,8 @@ def printBanner():
 |_| \_|_|  |_/_/   \_\_|   \__, |_|  \__,_| .__/|_| |_|\___|_|
               attactics.org|___/          |_|@evasiv3     v0.1a
    | Generates graph, html, and csv data from NMAP XML files |      """
-    print banner
-    print ''
+    print (banner)
+    print ('')
 
 def populateObjects(file):
     e = ET.parse(file).getroot()
@@ -185,16 +185,16 @@ def getPorts(number, sort, typePort):
 
 def checkArgs(args):
     if not os.path.isfile(args.inputFile):
-        print bcolors.FAIL + ' [!] - Input file cannot be found. Quitting...' + bcolors.ENDC
+        print (bcolors.FAIL + ' [!] - Input file cannot be found. Quitting...' + bcolors.ENDC)
         sys.exit()
     if args.tports and args.tports not in ['tcp', 'udp', 'both']:
-        print bcolors.FAIL + ' [!] - Invalid port type specified. Quitting...' + bcolors.ENDC
+        print (bcolors.FAIL + ' [!] - Invalid port type specified. Quitting...' + bcolors.ENDC)
         sys.exit()
     if args.outputFormat not in ['csv','svg','png','html']:
-        print bcolors.FAIL + ' [!] - Invalid output type specified. Quitting...' + bcolors.ENDC 
+        print (bcolors.FAIL + ' [!] - Invalid output type specified. Quitting...' + bcolors.ENDC) 
         sys.exit()
     if not args.c:
-        print bcolors.WARNING + '[!] - Custom item count not specified, defaulting to 10.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - Custom item count not specified, defaulting to 10.' + bcolors.ENDC)
 
 def getOperSys(number, sort):
     allOperSys = []
@@ -273,7 +273,7 @@ populateObjects(args.inputFile)
 if args.c == None:
     args.c = '10'
 if (args.tports == None) and (args.bports == None) and (args.hostlist == False) and (args.tservices == False) and (args.bservices == False) and (args.tos == False) and (args.bos == False) and (args.thosts == False) and (args.bhosts == False):
-    print bcolors.WARNING + '[+] - No output flags specified, generating default outputs in '+args.outputFormat+' format.' + bcolors.ENDC
+    print (bcolors.WARNING + '[+] - No output flags specified, generating default outputs in '+args.outputFormat+' format.' + bcolors.ENDC)
     args.tports = 'both'
     args.bports = 'both'
     args.tservices = True
@@ -287,66 +287,66 @@ checkArgs(args)
 if args.tports:
     res = getPorts(int(args.c),'top',args.tports)
     if not res:
-        print bcolors.WARNING + '[!] - No port info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No port info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Most Common Ports', ['Port','Total'], args.outputBaseName+'_Top'+args.c+'Ports', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.hostlist:
     if args.outputFormat != 'html':
-        print bcolors.WARNING + '[!] - \'All Hosts\' Services\' output is only generated in HTML.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - \'All Hosts\' Services\' output is only generated in HTML.' + bcolors.ENDC)
     res = getHostPortList()
     if not res:
-        print bcolors.WARNING + '[!] - No detailed host service info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No detailed host service info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateHostPortListOutput(res, args.outputBaseName+'_hostList.html')
-        print bcolors.OKGREEN + '[+] - Generated \'All Hosts\' Services\' output in html format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'All Hosts\' Services\' output in html format.' + bcolors.ENDC)
 if args.bports:
     res = getPorts(int(args.c),'bottom',args.tports)
     if not res:
-        print bcolors.WARNING + '[!] - No port info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No port info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Least Common Ports', ['Port','Total'], args.outputBaseName+'_Bottom'+args.c+'Ports', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.tservices:
     res = getServices(int(args.c),'top')
     if not res:
-        print bcolors.WARNING + '[!] - No service info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No service info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Most Common Services', ['Service','Total'], args.outputBaseName+'_Top'+args.c+'Services', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Services\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Services\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.bservices:
     res = getServices(int(args.c),'bottom')
     if not res:
-        print bcolors.WARNING + '[!] - No service info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No service info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Least Common Services', ['Service','Total'], args.outputBaseName+'_Bottom'+args.c+'Services', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Services\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Services\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.tos:
     res = getOperSys(int(args.c),'top')
     if not res:
-        print bcolors.WARNING + '[!] - No operating system info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No operating system info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Most Common Operating Systems', ['Operating System', 'Total'], args.outputBaseName+'_Top'+args.c+'OperatingSystems', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Operating Systems\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Most Common Operating Systems\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.bos:
     res = getOperSys(int(args.c),'bottom')
     if not res:
-        print bcolors.WARNING + '[!] - No operating system info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No operating system info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, args.c+' Least Common Operating Systems', ['Operating System', 'Total'], args.outputBaseName+'_Bottom'+args.c+'OperatingSystems', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Operating Systems\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Least Common Operating Systems\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.thosts:
     res = getHosts(int(args.c),'top')
     if not res:
-        print bcolors.WARNING + '[!] - No host info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No host info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Hosts with Most Open Ports', ['Host', 'Total'], args.outputBaseName+'_Top'+args.c+'Hosts', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Hosts with Most Open Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Hosts with Most Open Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
 if args.bhosts:
     res = getHosts(int(args.c),'bottom')
     if not res:
-        print bcolors.WARNING + '[!] - No host info found, related output will not be generated.' + bcolors.ENDC
+        print (bcolors.WARNING + '[!] - No host info found, related output will not be generated.' + bcolors.ENDC)
     else:
         generateOutput(res, 'Top '+args.c+' Hosts with Least Open Ports', ['Host', 'Total'], args.outputBaseName+'_Bottom'+args.c+'Hosts', args.outputFormat)
-        print bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Hosts with Least Open Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC
-print bcolors.OKGREEN + '[+] - Done.' + bcolors.ENDC
+        print (bcolors.OKGREEN + '[+] - Generated \'Top '+args.c+' Hosts with Least Open Ports\' output in '+args.outputFormat+' format.' + bcolors.ENDC)
+print (bcolors.OKGREEN + '[+] - Done.' + bcolors.ENDC)

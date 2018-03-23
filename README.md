@@ -24,3 +24,6 @@ Usage information can be found at http://www.attactics.org/2015/09/nmapgrapher-t
 
 ###Your code sucks and it's broken
 I'm not a python ninja and the tool is in alpha, so that is quite possible. Feel free to contact me on twitter (@evasiv3) and I can fix any bugs or issues you are experiencing.
+
+
+####Slight update for python3 - hopefuly with zero derps
